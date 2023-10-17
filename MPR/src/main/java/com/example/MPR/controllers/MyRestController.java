@@ -18,19 +18,41 @@ public class MyRestController {
         this.myRestService = myRestService;
     }
 
-    @GetMapping("/cars")
-    public List<Car> getAllCars() {
-        return myRestService.getAllCars();
+   @GetMapping("/cars")
+   public Iterable<Car> getAllCars() {
+       return myRestService.getAllCars();
+   }
+    @GetMapping("/cars/{name}")
+    public List<Car> findCarByName(@PathVariable("name") String name) {
+        return myRestService.getCarByName(name);
     }
 
     @PutMapping("/cars")
-    public void addCar(@RequestBody Car car) {
-        myRestService.addCar(car);
+    public void updateCar(@RequestBody Car car) {
+        if (myRestService.getCarById(car.getId()).isEmpty()){
+            System.out.println("Nie ma takiego autka");
+        }else {
+            myRestService.save(car);
+            System.out.println("Zaktualizowano auto");
+        }
+
     }
 
-    @DeleteMapping("/cars/{name}")
-    public void deleteCar(@PathVariable String name) {
-        myRestService.deleteCar(name);
+    @PostMapping("/cars")
+    public void addCar(@RequestBody Car car) {
+        if (myRestService.getCarById(car.getId()).isEmpty()){
+            myRestService.save(car);
+            System.out.println("Dodano auto do listy");
+
+        }else {
+            System.out.println("Jest już takie autko");
+        }
     }
+
+   @DeleteMapping("/cars/{id}")
+   public void deleteCar(@PathVariable Long id) {
+       myRestService.deleteCar(id);
+   }
 }
+
 
