@@ -1,7 +1,7 @@
 package com.example.MPR.controllers;
 
-import com.example.MPR.CarAlreadyExistsException;
 import com.example.MPR.dtos.Car;
+import com.example.MPR.exceptions.CarNeedsToExistException;
 import com.example.MPR.services.MyRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,23 +30,12 @@ public class MyRestController {
 
     @PutMapping("/cars")
     public void updateCar(@RequestBody Car car) {
-        if (myRestService.getCarById(car.getId()).isEmpty()){
-            throw new CarAlreadyExistsException();
-        }else {
-            myRestService.save(car);
-        }
-
+        myRestService.update(car);
     }
 
     @PostMapping("/cars")
     public void addCar(@RequestBody Car car) {
-        if (myRestService.getCarById(car.getId()).isEmpty()){
-            myRestService.save(car);
-            System.out.println("Dodano auto do listy");
-
-        }else {
-            System.out.println("Jest już takie autko");
-        }
+        myRestService.save(car);
     }
 
    @DeleteMapping("/cars/{id}")

@@ -1,12 +1,11 @@
 package com.example.MPR.services;
 
+import com.example.MPR.exceptions.CarAlreadyExistsException;
 import com.example.MPR.CarRepo;
 import com.example.MPR.dtos.Car;
-import org.springframework.stereotype.Component;
+import com.example.MPR.exceptions.CarNeedsToExistException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,20 @@ public class MyRestService {
    }
 
     public void save(Car car) {
-        carRepo.save(car);
+        if (carRepo.findById(car.getId()).isEmpty()){
+            carRepo.save(car);
+
+        }else {
+            throw new CarAlreadyExistsException();
+        }
+    }
+    public void update(Car car) {
+        if (carRepo.findById(car.getId()).isPresent()){
+            carRepo.save(car);
+
+        }else {
+            throw new CarNeedsToExistException();
+        }
     }
     public Optional<Car> getCarById(Long id){
         return carRepo.findById(id);
