@@ -1,5 +1,6 @@
 package com.example.MPR.controllers;
 
+import com.example.MPR.CarAlreadyExistsException;
 import com.example.MPR.dtos.Car;
 import com.example.MPR.services.MyRestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,9 @@ public class MyRestController {
     @PutMapping("/cars")
     public void updateCar(@RequestBody Car car) {
         if (myRestService.getCarById(car.getId()).isEmpty()){
-            System.out.println("Nie ma takiego autka");
+            throw new CarAlreadyExistsException();
         }else {
             myRestService.save(car);
-            System.out.println("Zaktualizowano auto");
         }
 
     }
