@@ -1,15 +1,16 @@
 package com.example.MPR.controllers;
 
 import com.example.MPR.dtos.Car;
-import com.example.MPR.exceptions.CarNeedsToExistException;
 import com.example.MPR.services.MyRestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cars")
 public class MyRestController {
 
     private final MyRestService myRestService;
@@ -19,29 +20,31 @@ public class MyRestController {
         this.myRestService = myRestService;
     }
 
-   @GetMapping("/cars")
-   public Iterable<Car> getAllCars() {
-       return myRestService.getAllCars();
-   }
-    @GetMapping("/cars/{name}")
-    public List<Car> findCarByName(@PathVariable("name") String name) {
-        return myRestService.getCarByName(name);
+    @GetMapping
+    public ResponseEntity<Iterable<Car>> getAllCars() {
+        return ResponseEntity.ok(myRestService.getAllCars());
     }
 
-    @PutMapping("/cars")
-    public void updateCar(@RequestBody Car car) {
+    @GetMapping("/{name}")
+    public ResponseEntity<List<Car>> findCarByName(@PathVariable("name") String name) {
+        return ResponseEntity.ok(myRestService.getCarByName(name));
+    }
+
+    @PutMapping
+    public ResponseEntity<String> updateCar(@RequestBody Car car) {
         myRestService.update(car);
+        return ResponseEntity.ok("Samochód zaktualizowany");
     }
 
-    @PostMapping("/cars")
-    public void addCar(@RequestBody Car car) {
+    @PostMapping
+    public ResponseEntity<String> addCar(@RequestBody Car car) {
         myRestService.save(car);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Dodano samochód");
     }
 
-   @DeleteMapping("/cars/{id}")
-   public void deleteCar(@PathVariable Long id) {
-       myRestService.deleteCar(id);
-   }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCar(@PathVariable Long id) {
+        myRestService.deleteCar(id);
+        return ResponseEntity.ok("Usunięto samochód o id: " + id);
+    }
 }
-
-
