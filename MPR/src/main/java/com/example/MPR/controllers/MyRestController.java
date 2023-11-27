@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -25,9 +26,14 @@ public class MyRestController {
         return ResponseEntity.ok(myRestService.getAllCars());
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<List<Car>> findCarByName(@PathVariable("name") String name) {
         return ResponseEntity.ok(myRestService.getCarByName(name));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity <Optional<Car>> getCarById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(myRestService.getCarById(id));
     }
 
     @PutMapping

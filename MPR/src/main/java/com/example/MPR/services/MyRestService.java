@@ -51,7 +51,14 @@ public class MyRestService {
     }
 
     public Optional<Car> getCarById(Long id){
-        return carRepo.findById(id);
+        Optional<Car> car = carRepo.findById(id);
+
+        if(car.isPresent()){
+            return car;
+        }
+        else{
+            throw new CarNeedsToExistException("Samochód z ID " + id + " nie istnieje.");
+        }
     }
 
     public void deleteCar(Long id) {

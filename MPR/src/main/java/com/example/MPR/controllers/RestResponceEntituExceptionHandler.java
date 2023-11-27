@@ -20,7 +20,7 @@ public class RestResponceEntituExceptionHandler extends ResponseEntityExceptionH
     }
     @ExceptionHandler(CarNeedsToExistException.class)
     protected ResponseEntity<Object> handleBadRequest2(RuntimeException ex, WebRequest request){
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
 

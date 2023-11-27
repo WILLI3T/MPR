@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,10 +42,10 @@ public class CarServiceTest {
         String name = "test";
         int age = 1;
         Car car = new Car(name, age);
-        Mockito.when(repository.findByName(name)).thenReturn((List<Car>) car);
+        Mockito.when(repository.findByName(name)).thenReturn(List.of(car));
 
         List<Car> result = carService.getCarByName(name);
-        assertEquals(car, result);
+        assertEquals(List.of(car), result);
     }
 
     @Test
@@ -60,16 +61,18 @@ public class CarServiceTest {
         assertEquals(car, captor.getValue());
     }
     @Test
-    public void testUpdate() {
+    public void testGetAllCars() {
         String name = "name";
         int age = 1;
         Car car = new Car(name, age);
-        ArgumentCaptor<Car> captor = ArgumentCaptor.forClass(Car.class);
-        Mockito.when(repository.save(captor.capture())).thenReturn(car);
-        carService.save(car);
-        car.setAge(2);
-        carService.update(car);
-        Mockito.verify(repository, Mockito.times(1)).save(Mockito.any());
-        assertEquals(car, captor.getValue());
+        Car car2 = new Car("fiat", 2);
+        List<Car> cars = new ArrayList<>();
+        cars.add(car);
+        cars.add(car2);
+        Mockito.when(repository.findAll()).thenReturn(cars);
+
+        Iterable<Car> result = carService.getAllCars();
+        assertEquals(cars, result);
     }
+
 }
