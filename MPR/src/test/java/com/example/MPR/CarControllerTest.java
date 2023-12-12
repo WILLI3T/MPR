@@ -51,7 +51,6 @@ public class CarControllerTest {
 
         mockMvc.perform(get("/api/cars/1"))
                 .andExpect(status().isOk())
-             //   .andExpect(jsonPath("$.name").value("test"))
                 .andDo(print());
     }
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<table>
+    <tbody>
+    <tr th:each="car: ${cars}">
+        <td th:text="${car.id}"></td>
+        <td th:text="${car.name}"></td>
+        <td th:text="${car.age}"></td>
+        <td>
+            <a th:href="@{/editCar/{id}(id=${car.id})}">Edit</a>
+            <a th:href="@{/deleteCar/{id}(id=${car.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a class="add-link" th:href="@{/addCar}">Add new car</a>
+</body>
+</html>

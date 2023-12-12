@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator:6.1.7.Final'
 	implementation 'javax.validation:validation-api:2.0.1.Final'
 	testImplementation 'org.hamcrest:hamcrest:2.2' // Use the latest version available
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf:3.1.2')
 
 }
 
