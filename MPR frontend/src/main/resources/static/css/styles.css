@@ -1,0 +1,104 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: #0275d8;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #0275d8;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+a:hover {
+    background-color: #0275d8;
+    color: white;
+}
+
+.add-link {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.add-link:hover {
+    background-color: #45a049;
+}
+
+/* Styl dla formularza */
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 20px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+h1 {
+    font-size: 48px; /* znacznie większy rozmiar czcionki */
+    font-family: 'Arial', sans-serif; /* styl czcionki */
+    color: #4CAF50; /* kolor tekstu */
+    text-shadow: 1px 1px 2px #ddd; /* subtelny cień tekstu */
+    text-align: center; /* wyśrodkowanie tekstu */
+    margin-top: 30px; /* margines na górze */
+    margin-bottom: 20px; /* margines na dole */
+    padding: 10px; /* wewnętrzny odstęp */
+}
+
