@@ -19,6 +19,10 @@ public class MyRestController {
     @Autowired
     public MyRestController(MyRestService myRestService) {
         this.myRestService = myRestService;
+        myRestService.save(new Car("test", 1));
+        myRestService.save(new Car("test2", 2));
+        myRestService.save(new Car("test3", 3));
+
     }
 
     @GetMapping

@@ -1,13 +1,13 @@
 package com.example.MPR.services;
 
-import com.example.MPR.exceptions.CarAlreadyExistsException;
-import com.example.MPR.CarRepo;
 import com.example.MPR.dtos.Car;
 import com.example.MPR.exceptions.CarNeedsToExistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +15,14 @@ import java.util.Optional;
 @Service
 public class MyRestService {
 
-    private final CarRepo carRepo;
-    private static final Logger log = LoggerFactory.getLogger(MyRestService.class);
 
+    private static final Logger log = LoggerFactory.getLogger(MyRestService.class);
+    public static final String BASE_URL = "http://localhost:8080/api";
+    RestClient restClient;
     @Autowired
-    public MyRestService(CarRepo repo) {
-        this.carRepo = repo;
+
+    public MyRestService() {
+        restClient = RestClient().create();
     }
 
     public List<Car> getCarByName(String name) {
@@ -30,7 +32,13 @@ public class MyRestService {
 
     public Iterable<Car> getAllCars() {
         log.info("Fetching all cars");
-        return carRepo.findAll();
+        List<Car> cars = restClient
+                .get()
+                .uri(BASE_URL + "/cars")
+                .retrieve()
+                .body(new ParameterizedTypeReference<>() {});
+        return cars;
+
     }
 
     public void save(Car car) {
@@ -61,11 +69,15 @@ public class MyRestService {
         log.info("Car updated successfully");
     }
 
-    public Optional<Car> getCarById(Long id) {
+    public Car getCarById(Long id) {
         log.info("Fetching car with ID: {}", id);
-        Optional<Car> car = carRepo.findById(id);
+        Car car = restClient
+                .get()
+                .uri(BASE_URL + "/cars/" + id)
+                .retrieve()
+                .body(Car.class);
 
-        if (car.isPresent()) {
+        if (car != null) {
             return car;
         } else {
             throw new CarNeedsToExistException("Car with ID " + id + " does not exist.");
