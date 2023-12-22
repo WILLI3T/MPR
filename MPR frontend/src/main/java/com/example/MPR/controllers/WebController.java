@@ -27,8 +27,6 @@ public class WebController {
     @Autowired
     public WebController(MyRestService myRestService) {
         this.myRestService = myRestService;
-        myRestService.save(new Car("test", 1));
-        myRestService.save(new Car("test2", 2));
     }
     @GetMapping(value = "/index")
     public String getIndexView(Model model) {
@@ -72,9 +70,9 @@ public class WebController {
 
     @GetMapping(value = "/editCar/{id}")
     public String getEditCarView(@PathVariable("id") long id, Model model) {
-        Optional<Car> car = myRestService.getCarById(id);
-        if (car.isPresent()) {
-            model.addAttribute("car", car.get());
+        Car car = myRestService.getCarById(id);
+        if (car != null) {
+            model.addAttribute("car", car);
             return "editCar";
         } else {
             return "redirect:/index";

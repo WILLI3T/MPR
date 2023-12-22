@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class AddCarPage {
-    public static final String URL = "http://localhost:8080/addCar";
+    public static final String URL = "http://localhost:8081/addCar";
 
     public static final String TITLE = "Add new car:";
 

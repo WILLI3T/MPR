@@ -14,6 +14,8 @@ import java.time.Duration;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class IndexPageTest {
     WebDriver webDriver ;
@@ -30,7 +32,7 @@ public class IndexPageTest {
     public void open(){
         IndexPage indexPage = new IndexPage(webDriver);
         indexPage.open();
-        assertEquals("http://localhost:8080/index", webDriver.getCurrentUrl());
+        assertEquals("http://localhost:8081/index", webDriver.getCurrentUrl());
         assertEquals(IndexPage.TITLE, indexPage.getHeader());
     }
 
@@ -40,7 +42,7 @@ public class IndexPageTest {
         indexPage.open();
         indexPage.clickAddNewCarButton();
         assertEquals(AddCarPage.URL, webDriver.getCurrentUrl());
-        assertEquals(AddCarPage.TITLE, webDriver.getTitle());
+        assertEquals(AddCarPage.TITLE, indexPage.getHeader());
     }
     @Test
     public void addNewCar(){
@@ -57,8 +59,8 @@ public class IndexPageTest {
         IndexPage indexPage = new IndexPage(webDriver);
         indexPage.open();
         indexPage.clickEditButton();
-        assertEquals(EditCarPage.URL, webDriver.getCurrentUrl());
-        assertEquals(EditCarPage.TITLE, webDriver.getTitle());
+        assertTrue(webDriver.getCurrentUrl().contains(EditCarPage.URL));
+        assertEquals(EditCarPage.TITLE, indexPage.getHeader());
     }
     @Test
     public void EditCar(){
