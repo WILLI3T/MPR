@@ -47,9 +47,9 @@ public class MyRestController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addCar(@RequestBody Car car) {
+    public ResponseEntity<Car> addCar(@RequestBody Car car) {
         myRestService.save(car);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Dodano samochód");
+        return new ResponseEntity<Car>(car,HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
